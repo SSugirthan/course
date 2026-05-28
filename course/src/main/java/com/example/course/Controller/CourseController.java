@@ -1,6 +1,6 @@
-package com.example.course.controller;
+package com.example.course.Controller;
 
-import com.example.course.model.Course;
+import com.example.course.Model.Course;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +64,22 @@ public class CourseController {
         courses.add(course);
 
         return ResponseEntity.ok("Course Added");
+    }
+
+    @PutMapping("/update/{code}")
+    public ResponseEntity<String> updateCourse(@PathVariable
+ String code, @RequestBody Course updatedCourse) {
+        for (Course c : courses) {
+
+            if (c.getCourseCode().equalsIgnoreCase(code)) {
+
+                courses.remove(c);
+                courses.add(updatedCourse);
+
+                return ResponseEntity.ok("Course Updated");
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{code}")
